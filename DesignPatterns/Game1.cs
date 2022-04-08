@@ -9,6 +9,9 @@ namespace DesignPatterns
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        private Player player;
+
+        public static float DeltaTime { get; private set; }
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -19,7 +22,7 @@ namespace DesignPatterns
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            player = new Player(new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight));
             base.Initialize();
         }
 
@@ -28,6 +31,7 @@ namespace DesignPatterns
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            player.LoadContent(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -36,6 +40,9 @@ namespace DesignPatterns
                 Exit();
 
             // TODO: Add your update logic here
+            DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            player.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -45,6 +52,10 @@ namespace DesignPatterns
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+
+            _spriteBatch.Begin();
+            player.Draw(_spriteBatch);
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
