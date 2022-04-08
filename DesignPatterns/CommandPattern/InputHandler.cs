@@ -10,6 +10,20 @@ namespace DesignPatterns
 {
     class InputHandler
     {
+        private static InputHandler instance;
+
+        public static InputHandler Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new InputHandler();
+                }
+                return instance;
+            }
+        }
+
         private Dictionary<Keys, ICommand> keybinds = new Dictionary<Keys, ICommand>();
 
         public InputHandler()
